@@ -1,0 +1,47 @@
+
+ScriptName=`echo $0 | awk -F'/' '{print $NF}'`
+CurrentPath=`echo $0 | sed "s/$ScriptName//"`
+cd $CurrentPath
+
+if [ -z "$1" ]; then
+ echo "Syntax: $0 <hostname>"; exit 1
+else 
+ hostn="$1"
+fi
+
+echo "+:.Show Password Script.:+"
+OSVER=`uname`
+case "$OSVER" in
+HP-UX)
+       if [ ! -f .su/.su.pwd.crypt ]; then
+        echo "Script Error: DB does not exist"
+        exit 1
+       fi
+       x=`crypt < .su/.su.pwd.crypt 2> /dev/null | grep -iw $hostn`
+       ;;
+SunOS) 
+       if [ ! -f .su/.su.pwd.crypt ]; then
+        echo "Script Error: DB does not exist"
+        exit 1
+       fi
+       x=`crypt < .su/.su.pwd.crypt 2> /dev/null | grep -iw $hostn`
+       ;;
+Linux) 
+       if [ ! -f .su/.su.pwd.gpg ]; then
+        echo "Script Error: DB does not exist"
+        exit 1
+       fi
+       x=`/usr/bin/gpg --decrypt .su/.su.pwd.gpg 2> /dev/null | grep -iw $hostn`
+       ;;
+*) echo "System is not supported"; exit 1;;
+esac
+
+
+if [ -z "$x" ]; then
+ echo "You entered an incorrect key OR $hostn was not found"
+else echo $x | awk '{print $2}'
+fi
+
+
+## Generate crypt file: crypt < .su.pwd > .su.pwd.crypt
+##          gpp crypt file: 

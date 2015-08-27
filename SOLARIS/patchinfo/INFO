@@ -1,0 +1,4 @@
+OPTION: Patch Info Preparation
+
+This Script is use to gather system information before patching 
+a Solaris system. This information may be helpful in troubleshooting any issues

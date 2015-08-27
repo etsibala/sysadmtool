@@ -1,0 +1,27 @@
+PLEASE READ!!!
+
+WHAT TO MODIFY:
+ Modify exported variables inside run.sh file
+
+SYSTEM INFORMATION:
+ Usage: ksh ./run.sh menu [send_mail|send_ssh]
+        ksh ./run.sh auto <options> [send_mail|send_ssh]
+
+SERVER PASSWORD:
+ Usage: ./supwd <hostname>
+
+GET PROCESS INFO:
+ Usage: ./solaris_get_proc.sh
+
+
+Have fun with my scripts!
+Author: etsibala@gmail.com
+
+
+Change log:
+VERSION			DESCRIPTION
+01.04.11.2009		SOLARIS:logcheck - remove output file at startup
+01.05.11.2009		SOLARIS:logcheck - add more filter in prtdiag
+01.06.11.2009		SOLARIS:logcheck - add more filter in prtdiag
+01.18.11.2009		SOLARIS:logcheck - revise iostat display
+02.06.02.2010		ALL:sysinfo - classified command by functions
