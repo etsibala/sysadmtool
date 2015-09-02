@@ -14,7 +14,7 @@ export SSH_HOST="proyekto.server.com"
 export SSH_ADM="root"
 
 
-# Check for root
+# Retrict to run as root only
 checkroot ()
 {
  ROOT=`id | cut -b 5`
@@ -27,24 +27,26 @@ checkroot ()
 # Use to ensure only one instance of the script running
 initialize ()
 {
- if [ -f /tmp/.dcadmtool.lock ]
+ if [ -f /tmp/.sysadmtool.lock ]
  then
-  echo "One instance might be running or in hang state. To continue, remove /tmp/.dcadmtool.lock and kill PID inside it.\n"
+  echo "One instance might be running or in hang state. To continue, you need to manually remove /tmp/.sysadmtool.lock and kill PID inside it.\n"
   exit
  fi
 }
+
+# Remove the locking and cleanup
 cleanup ()
 {
-[ -f /tmp/.dcadmtool.lock ] && rm /tmp/.dcadmtool.lock
+ [ -f /tmp/.sysadmtool.lock ] && rm /tmp/.sysadmtool.lock
 }
 
 
-######### START #########
+######### MAIN START #########
 
 initialize
 checkroot
 trap 'echo; echo Interrupted by user... Please see any files that might have been created in $LOG_DIR directory;cleanup;sleep 1;exit 1' 1 2 3 15
-echo $$ > /tmp/.dcadmtool.lock
+echo $$ > /tmp/.sysadmtool.lock
 
 case $1 in
 menu) continue;;
@@ -85,7 +87,7 @@ if [ -f PATH ]; then
 fi
 
 # Initial display message
-echo "+:.DarnCool Admin Tool .:+"
+echo "+:.System Admin Tool .:+"
 echo "Operating System: `uname -sr`"
 echo "Script version: $SCRIPT_VERSION"
 
